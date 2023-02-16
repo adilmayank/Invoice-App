@@ -1,25 +1,26 @@
-import logo from './logo.svg';
-import './App.css';
+import logo from './logo.svg'
+import './App.css'
+import { Container, Row, Col, Button, ButtonGroup } from 'react-bootstrap'
+import NavNavbar from './components/Navbar'
+import CustomerInfo from './components/CustomerInfo'
+import MainButtons from './components/MainButtons'
+import ProductsInfo from './components/ProductsInfo'
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <Container fluid className="p-0">
+      <NavNavbar />
+      <Container>
+        <CustomerInfo />
+        <ProductsInfo />
+        <Row>
+          <Col md={5}>Customer Info</Col>
+          <Col md={7}>Customer Info</Col>
+        </Row>
+        <MainButtons />
+      </Container>
+    </Container>
+  )
 }
 
-export default App;
+export default App
