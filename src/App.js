@@ -5,6 +5,7 @@ import NavNavbar from './components/Navbar'
 import CustomerInfo from './components/CustomerInfo'
 import MainButtons from './components/MainButtons'
 import ProductsInfo from './components/ProductsInfo'
+import Summary from './components/Summary'
 
 function App() {
   return (
@@ -13,10 +14,7 @@ function App() {
       <Container>
         <CustomerInfo />
         <ProductsInfo />
-        <Row>
-          <Col md={5}>Customer Info</Col>
-          <Col md={7}>Customer Info</Col>
-        </Row>
+        <Summary />
         <MainButtons />
       </Container>
     </Container>

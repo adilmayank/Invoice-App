@@ -11,3 +11,31 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.productsInfoContainer {
+  height: 250px;
+}
+
+.product-table {
+  font-size: 0.8rem;
+}
+
+td {
+  vertical-align: middle !important;
+}
+
+.smaller-button {
+  padding: 0.05rem 0.5rem !important;
+}
+
+.small-text {
+  font-size: 0.8rem !important;
+}
+
+.small-text > label {
+  font-size: 0.8rem;
+}
+
+.y-scroll {
+  overflow-y: scroll;
+}
