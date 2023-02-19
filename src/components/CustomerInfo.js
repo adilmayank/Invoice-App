@@ -31,16 +31,19 @@ const CustomerInfo = () => {
   const submitCustomerName = () => {
     if (customerName.trim() !== '') {
       setSubmittedCustomerName(customerName)
+      setCustomerName('')
     }
   }
   const submitCustomerABN = () => {
     if (customerABN.trim() !== '') {
       setSubmittedCustomerABN(customerABN)
+      setCustomerABN('')
     }
   }
   const submitCustomerEmail = () => {
     if (customerEmail.trim() !== '') {
       setSubmittedCustomerEmail(customerEmail)
+      setCustomerEmail('')
     }
   }
 
@@ -55,7 +58,6 @@ const CustomerInfo = () => {
             <Col md={6}>
               <Form.Control
                 id="customerName"
-                placeholder="enter customer name..."
                 value={customerName}
                 onChange={(e) => updateCustomerName(e)}
               />
@@ -73,7 +75,6 @@ const CustomerInfo = () => {
             <Col md={6}>
               <Form.Control
                 id="customerAbn"
-                placeholder="enter customer abn..."
                 value={customerABN}
                 onChange={(e) => updateCustomerABN(e)}
               />
@@ -91,7 +92,6 @@ const CustomerInfo = () => {
             <Col md={6}>
               <Form.Control
                 id="customerEmail"
-                placeholder="enter customer email..."
                 value={customerEmail}
                 onChange={(e) => updateCustomerEmail(e)}
               />
@@ -104,32 +104,73 @@ const CustomerInfo = () => {
           </Form.Group>
         </Form>
       </Col>
-      <Col md={7} className="align-items-center d-flex">
-        <Container className="h-100 border">
-          <Row className="h-50 align-items-center">
+
+      <Col md={7} className="small-text">
+        <Container className="h-100 border p-3">
+          <Row className="h-50 mb-2 align-items-center">
             <Col md={6}>
-              <Form.Control
-                type="text"
-                disabled
-                value={submittedCustomerName}
-              ></Form.Control>
+              <Form.Group as={Row}>
+                <Form.Label
+                  className="d-flex align-items-center"
+                  column
+                  md={4}
+                  htmlFor="submittedCustomerName"
+                >
+                  Name:
+                </Form.Label>
+                <Col md={8}>
+                  <Form.Control
+                    id="submittedCustomerName"
+                    disabled
+                    value={submittedCustomerName}
+                    size="sm"
+                  ></Form.Control>
+                </Col>
+              </Form.Group>
             </Col>
             <Col md={6}>
-              <Form.Control
-                type="text"
-                disabled
-                value={submittedCustomerEmail}
-              ></Form.Control>
+              <Form.Group as={Row}>
+                <Form.Label
+                  className="d-flex align-items-center"
+                  column
+                  md={4}
+                  htmlFor="submittedCustomerABN"
+                >
+                  ABN:
+                </Form.Label>
+                <Col md={8}>
+                  <Form.Control
+                    id="submittedCustomerABN"
+                    value={submittedCustomerABN}
+                    size="sm"
+                    disabled
+                  ></Form.Control>
+                </Col>
+              </Form.Group>
             </Col>
           </Row>
-          <Row className="h-50 align-items-center">
+          <Row className="h-50 mb-2 align-items-center">
             <Col md={6}>
-              <Form.Control
-                type="text"
-                disabled
-                value={submittedCustomerABN}
-              ></Form.Control>
+              <Form.Group as={Row}>
+                <Form.Label
+                  className="d-flex align-items-center"
+                  column
+                  md={4}
+                  htmlFor="submittedCustomerEmail"
+                >
+                  Email
+                </Form.Label>
+                <Col md={8}>
+                  <Form.Control
+                    id="submittedCustomerEmail"
+                    value={submittedCustomerEmail}
+                    size="sm"
+                    disabled
+                  ></Form.Control>
+                </Col>
+              </Form.Group>
             </Col>
+            <Col md={6}>&nbsp;</Col>
           </Row>
         </Container>
       </Col>

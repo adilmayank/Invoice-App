@@ -1,5 +1,7 @@
 import React from 'react'
 import { useContext, useState } from 'react'
+import { SubmitAndReturnExcel } from '../Utilities/Api-Calls'
+import { DownloadPdf } from '../Utilities/utils'
 
 const Context = React.createContext()
 
@@ -9,21 +11,45 @@ export const AppProvider = ({ children }) => {
   const [customerEmail, setCustomerEmail] = useState('')
   const [stockCode, setStockCode] = useState('')
   const [description, setDescription] = useState('')
-  const [quantity, setQuantity] = useState('')
-  const [unitPrice, setUnitPrice] = useState('')
-  const [submittedCustomerName, setSubmittedCustomerName] =
-    useState('Customer Name')
-  const [submittedCustomerABN, setSubmittedCustomerABN] =
-    useState('Customer ABN')
-  const [submittedCustomerEmail, setSubmittedCustomerEmail] =
-    useState('Customer Email')
+  const [quantity, setQuantity] = useState(0)
+  const [unitPrice, setUnitPrice] = useState(0)
+  const [subTotal, setSubTotal] = useState(0)
+  const [submittedCustomerName, setSubmittedCustomerName] = useState('')
+  const [submittedCustomerABN, setSubmittedCustomerABN] = useState('')
+  const [submittedCustomerEmail, setSubmittedCustomerEmail] = useState('')
+  const [gstRate, setGstRate] = useState(0)
+  const [submittedGstRate, setSubmittedGstRate] = useState(0)
+  const [submittedProducts, setSubmittedProducts] = useState([])
 
   function submitResponse() {
-    console.log({
+    const postBody = {
       submittedCustomerName,
       submittedCustomerABN,
       submittedCustomerEmail,
+      submittedGstRate,
+      submittedProducts,
+    }
+
+    const result = SubmitAndReturnExcel(postBody, {
+      responseType: 'arraybuffer',
     })
+
+    result
+      .then((data) => {
+        console.log(data.data)
+        DownloadPdf(data.data)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
+  }
+
+  function resetProductState() {
+    setStockCode('')
+    setDescription('')
+    setQuantity('')
+    setUnitPrice('')
+    setSubTotal('')
   }
 
   const initialValues = {
@@ -34,6 +60,7 @@ export const AppProvider = ({ children }) => {
     description,
     quantity,
     unitPrice,
+    subTotal,
     setCustomerName,
     setCustomerABN,
     setCustomerEmail,
@@ -41,6 +68,7 @@ export const AppProvider = ({ children }) => {
     setDescription,
     setQuantity,
     setUnitPrice,
+    setSubTotal,
     submitResponse,
     submittedCustomerName,
     submittedCustomerABN,
@@ -48,6 +76,13 @@ export const AppProvider = ({ children }) => {
     setSubmittedCustomerName,
     setSubmittedCustomerABN,
     setSubmittedCustomerEmail,
+    submittedProducts,
+    setSubmittedProducts,
+    resetProductState,
+    gstRate,
+    setGstRate,
+    submittedGstRate,
+    setSubmittedGstRate,
   }
 
   return (
