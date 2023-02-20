@@ -7,10 +7,9 @@ import {
   Container,
   ButtonGroup,
 } from 'react-bootstrap'
+import { useProductContext } from '../Contexts/ProductContext'
 import { useAppContext } from '../Contexts/Context'
 import React from 'react'
-import { SubTotalOrder } from '../Utilities/utils'
-import { MdDeleteForever, MdEdit } from 'react-icons/md'
 
 const ProductsInfo = () => {
   const {
@@ -22,24 +21,61 @@ const ProductsInfo = () => {
     setQuantity,
     unitPrice,
     setUnitPrice,
-    submittedProducts,
-    setSubmittedProducts,
-    resetProductState,
-  } = useAppContext()
+    submitProduct,
+    errors,
+    setErrors,
+  } = useProductContext()
 
-  React.useEffect(() => {}, [submittedProducts])
+  const { submittedProducts, setSubmittedProducts } = useAppContext()
+  React.useEffect(() => {}, [submittedProducts, errors])
 
-  const handleSubmit = () => {
-    const tempSubmittedResponse = {
-      stockCode,
-      description,
-      quantity,
-      unitPrice,
-      subTotal: (unitPrice * quantity).toFixed(2),
+  const updateValidationFlags = () => {
+    let tempErrors = errors
+    if (stockCode.trim() === '') {
+      tempErrors.stockCode = true
+    } else tempErrors.stockCode = false
+    if (description.trim() === '') {
+      tempErrors.description = true
+    } else tempErrors.description = false
+    if (quantity === '' || quantity === 0 || quantity === '0') {
+      tempErrors.quantity = true
+    } else tempErrors.quantity = false
+    if (unitPrice === '' || unitPrice === 0 || unitPrice === '0') {
+      tempErrors.unitPrice = true
+    } else tempErrors.unitPrice = false
+
+    setErrors({ ...tempErrors })
+  }
+
+  const handleSubmit = async () => {
+    updateValidationFlags()
+    const isInvalid = Object.values(errors).reduce((final, current) => {
+      return final || current
+    })
+    if (!isInvalid) {
+      submitProduct(submittedProducts, setSubmittedProducts)
     }
+  }
 
-    setSubmittedProducts([...submittedProducts, tempSubmittedResponse])
-    resetProductState()
+  const handleChange = (e) => {
+    let tempErrors = errors
+    if (e.target.id === 'stockCode') {
+      setStockCode(e.target.value)
+      tempErrors.stockCode = false
+    }
+    if (e.target.id === 'description') {
+      setDescription(e.target.value)
+      tempErrors.description = false
+    }
+    if (e.target.id === 'quantity') {
+      setQuantity(e.target.value)
+      tempErrors.quantity = false
+    }
+    if (e.target.id === 'unitPrice') {
+      setUnitPrice(e.target.value)
+      tempErrors.unitPrice = false
+    }
+    setErrors({ ...tempErrors })
   }
 
   const handleRemoveItem = (e) => {
@@ -76,8 +112,9 @@ const ProductsInfo = () => {
             <Col md={8} className="pr-0">
               <Form.Control
                 id="stockCode"
+                className={`${errors.stockCode ? 'border-danger' : ''}`}
                 value={stockCode}
-                onChange={(e) => setStockCode(e.target.value)}
+                onChange={(e) => handleChange(e)}
               />
             </Col>
           </Form.Group>
@@ -89,8 +126,9 @@ const ProductsInfo = () => {
               <Form.Control
                 id="description"
                 value={description}
+                className={`${errors.description ? 'border-danger' : ''}`}
                 type="text"
-                onChange={(e) => setDescription(e.target.value)}
+                onChange={(e) => handleChange(e)}
               />
             </Col>
           </Form.Group>
@@ -102,9 +140,10 @@ const ProductsInfo = () => {
               <Form.Control
                 id="quantity"
                 value={quantity}
+                className={`${errors.quantity ? 'border-danger' : ''}`}
                 type="number"
                 min={0}
-                onChange={(e) => setQuantity(e.target.value)}
+                onChange={(e) => handleChange(e)}
               />
             </Col>
           </Form.Group>
@@ -117,14 +156,15 @@ const ProductsInfo = () => {
                 id="unitPrice"
                 value={unitPrice}
                 type="number"
+                className={`${errors.unitPrice ? 'border-danger' : ''}`}
                 min={0}
-                onChange={(e) => setUnitPrice(e.target.value)}
+                onChange={(e) => handleChange(e)}
               />
             </Col>
           </Form.Group>
           <Row>
             <Col className="justify-content-end d-flex pr-0">
-              <Button size="sm" onClick={handleSubmit}>
+              <Button size="sm" onClick={() => handleSubmit()}>
                 Add
               </Button>
             </Col>

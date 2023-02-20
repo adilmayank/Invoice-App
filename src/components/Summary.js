@@ -4,8 +4,8 @@ import { useAppContext } from '../Contexts/Context'
 import { SubAndGrandTotal } from '../Utilities/utils'
 
 const Summary = () => {
-  const [subTotalValue, setSubTotalValue] = React.useState(0)
-  const [grandTotalValue, setGrandTotalValue] = React.useState(0)
+  const [subTotalValue, setSubTotalValue] = React.useState("")
+  const [grandTotalValue, setGrandTotalValue] = React.useState("")
 
   const {
     gstRate,
@@ -25,8 +25,14 @@ const Summary = () => {
 
   React.useEffect(() => {
     const summary = SubAndGrandTotal(submittedGstRate, submittedProducts)
-    setSubTotalValue(summary.subTotal.toFixed(2))
-    setGrandTotalValue(summary.grandTotal.toFixed(2))
+    if (submittedProducts.length > 0) {
+      setSubTotalValue(summary.subTotal.toFixed(2))
+      setGrandTotalValue(summary.grandTotal.toFixed(2))
+    }
+    else {
+      setSubTotalValue("")
+      setGrandTotalValue("")
+    }
   }, [submittedProducts, submittedGstRate])
 
   return (
@@ -40,7 +46,6 @@ const Summary = () => {
             <Col md={6}>
               <Form.Control
                 id="gstRate"
-                placeholder="enter gst rate..."
                 value={gstRate}
                 type="number"
                 onChange={(e) => updateGstRate(e)}
