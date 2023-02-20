@@ -9,16 +9,11 @@ export const AppProvider = ({ children }) => {
   const [customerName, setCustomerName] = useState('')
   const [customerABN, setCustomerABN] = useState('')
   const [customerEmail, setCustomerEmail] = useState('')
-  const [stockCode, setStockCode] = useState('')
-  const [description, setDescription] = useState('')
-  const [quantity, setQuantity] = useState(0)
-  const [unitPrice, setUnitPrice] = useState(0)
-  const [subTotal, setSubTotal] = useState(0)
   const [submittedCustomerName, setSubmittedCustomerName] = useState('')
   const [submittedCustomerABN, setSubmittedCustomerABN] = useState('')
   const [submittedCustomerEmail, setSubmittedCustomerEmail] = useState('')
-  const [gstRate, setGstRate] = useState(0)
-  const [submittedGstRate, setSubmittedGstRate] = useState(0)
+  const [gstRate, setGstRate] = useState('')
+  const [submittedGstRate, setSubmittedGstRate] = useState(18)
   const [submittedProducts, setSubmittedProducts] = useState([])
 
   function submitResponse() {
@@ -30,11 +25,9 @@ export const AppProvider = ({ children }) => {
       submittedProducts,
     }
 
-    const result = SubmitAndReturnExcel(postBody, {
+    SubmitAndReturnExcel(postBody, {
       responseType: 'arraybuffer',
     })
-
-    result
       .then((data) => {
         console.log(data.data)
         DownloadPdf(data.data)
@@ -44,31 +37,13 @@ export const AppProvider = ({ children }) => {
       })
   }
 
-  function resetProductState() {
-    setStockCode('')
-    setDescription('')
-    setQuantity('')
-    setUnitPrice('')
-    setSubTotal('')
-  }
-
   const initialValues = {
     customerName,
     customerABN,
     customerEmail,
-    stockCode,
-    description,
-    quantity,
-    unitPrice,
-    subTotal,
     setCustomerName,
     setCustomerABN,
     setCustomerEmail,
-    setStockCode,
-    setDescription,
-    setQuantity,
-    setUnitPrice,
-    setSubTotal,
     submitResponse,
     submittedCustomerName,
     submittedCustomerABN,
@@ -78,7 +53,6 @@ export const AppProvider = ({ children }) => {
     setSubmittedCustomerEmail,
     submittedProducts,
     setSubmittedProducts,
-    resetProductState,
     gstRate,
     setGstRate,
     submittedGstRate,
