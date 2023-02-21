@@ -24,24 +24,33 @@ export const SubAndGrandTotal = (gst, productList) => {
 
 export const DownloadPdf = async (arrayBuffer) => {
   const blob = new Blob([arrayBuffer], { type: 'application/pdf' })
-  if (window.showSaveFilePicker) {
-    const opts = {
-      types: [
-        {
-          suggestedName: 'invoice.pdf',
-          accept: { 'application/pdf': ['.pdf'] },
-        },
-      ],
-    }
-    const handle = await window.showSaveFilePicker(opts)
-    const writable = await handle.createWritable()
-    await writable.write(blob)
-    writable.close()
-  } else {
-    const saveImg = document.createElement('a')
-    saveImg.href = URL.createObjectURL(blob)
-    saveImg.download = 'invoice.pdf'
-    saveImg.click()
-    setTimeout(() => URL.revokeObjectURL(saveImg.href), 60000)
-  }
+
+  // -------- showSaveFilePicker is not working in case there is any data from the server
+  // ----------- so currently ditching the whole showSaveFilePicker thing ang moving forward with the basic download in Downloads style.
+  // if (window.showSaveFilePicker) {
+  //   const opts = {
+  //     types: [
+  //       {
+  //         suggestedName: 'invoice.pdf',
+  //         accept: { 'application/pdf': ['.pdf'] },
+  //       },
+  //     ],
+  //   }
+  //   const handle = await window.showSaveFilePicker(opts)
+  //   const writable = await handle.createWritable()
+  //   await writable.write(blob)
+  //   writable.close()
+  // } else {
+  //   const saveImg = document.createElement('a')
+  //   saveImg.href = URL.createObjectURL(blob)
+  //   saveImg.download = 'invoice.pdf'
+  //   saveImg.click()
+  //   setTimeout(() => URL.revokeObjectURL(saveImg.href), 60000)
+  // }
+
+  const saveImg = document.createElement('a')
+  saveImg.href = URL.createObjectURL(blob)
+  saveImg.download = 'Invoice.pdf'
+  saveImg.click()
+  setTimeout(() => URL.revokeObjectURL(saveImg.href), 60000)
 }
