@@ -15,6 +15,7 @@ export const AppProvider = ({ children }) => {
   const [gstRate, setGstRate] = useState('')
   const [submittedGstRate, setSubmittedGstRate] = useState(18)
   const [submittedProducts, setSubmittedProducts] = useState([])
+  const [waitingForInvoice, setWaitingForInvoice] = useState(false)
 
   function submitResponse() {
     const postBody = {
@@ -24,15 +25,18 @@ export const AppProvider = ({ children }) => {
       submittedGstRate,
       submittedProducts,
     }
+    setWaitingForInvoice(true)
 
     SubmitAndReturnExcel(postBody, {
       responseType: 'arraybuffer',
     })
       .then((data) => {
         console.log(data.data)
+        setWaitingForInvoice(false)
         DownloadPdf(data.data)
       })
       .catch((err) => {
+        setWaitingForInvoice(false)
         console.log(err)
       })
   }
@@ -57,6 +61,8 @@ export const AppProvider = ({ children }) => {
     setGstRate,
     submittedGstRate,
     setSubmittedGstRate,
+    waitingForInvoice,
+    setWaitingForInvoice,
   }
 
   return (

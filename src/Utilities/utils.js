@@ -27,6 +27,7 @@ export const DownloadPdf = async (arrayBuffer) => {
 
   // -------- showSaveFilePicker is not working in case there is any data from the server
   // ----------- so currently ditching the whole showSaveFilePicker thing ang moving forward with the basic download in Downloads style.
+
   // if (window.showSaveFilePicker) {
   //   const opts = {
   //     types: [
