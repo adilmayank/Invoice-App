@@ -40,4 +40,44 @@ td {
   overflow-y: scroll;
 }
 
+.waiting-spinner-container {
+  position: absolute;
+  /* display: none; */
+  height: 100vh;
+  width: 100vw;
+  background-color: transparent;
+  transition: all 0.25s ease-in-out;
+}
 
+.waiting-spinner {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  top: 30%;
+  left: calc(50% - 125px);
+  height: 150px;
+  width: 250px;
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 0 5px 1px;
+}
+
+.waiting-spinner > span {
+  margin-block: 10px;
+}
+
+.waiting-spinner-container.show {
+  opacity: 1;
+  display: block;
+  background-color: rgba(0, 0, 0, 0.237);
+  z-index: 999;
+}
+
+.hide {
+  display: none;
+  background-color: transparent;
+  opacity: 0;
+  z-index: -999;
+}

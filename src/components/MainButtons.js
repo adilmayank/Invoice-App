@@ -2,10 +2,16 @@ import { Row, Button } from 'react-bootstrap'
 import { useAppContext } from '../Contexts/Context'
 
 const MainButtons = () => {
-  const { submitResponse } = useAppContext()
+  const { submitResponse, setWaitingForInvoice } = useAppContext()
+  const handleSubmit = () => {
+    setWaitingForInvoice(() => {
+      return true
+    })
+    submitResponse()
+  }
   return (
     <Row className="justify-content-end">
-      <Button size="sm" className="mx-2" onClick={submitResponse}>
+      <Button size="sm" className="mx-2" onClick={handleSubmit}>
         Generate Invoice
       </Button>
       <Button size="sm" variant="success" className="mx-2">

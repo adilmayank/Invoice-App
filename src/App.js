@@ -7,10 +7,12 @@ import MainButtons from './components/MainButtons'
 import ProductsInfo from './components/ProductsInfo'
 import Summary from './components/Summary'
 import { ProductProvider } from './Contexts/ProductContext'
+import WaitingSpinner from './components/WaitingSpinner'
 
 function App() {
   return (
-    <Container fluid className="p-0">
+    <Container fluid className="p-0" style={{ position: 'relative' }}>
+      <WaitingSpinner />
       <NavNavbar />
       <Container>
         <CustomerInfo />
