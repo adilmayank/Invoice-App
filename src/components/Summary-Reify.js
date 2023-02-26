@@ -72,11 +72,11 @@ const SummaryReify = () => {
         as={Col}
         lg={5}
         xl={5}
-        className="border bordered-container mx-1 p-3 controlled-text"
+        className="border bordered-container mx-1 p-3 controlled-text my-1 my-lg-0"
       >
         <Form>
           <Form.Group as={Row} className=" px-3 info-input-row">
-            <Col lg={4} className="p-0">
+            <Col xs={3} lg={4} className="p-0">
               <Form.Label htmlFor="gstRate">GST (%)</Form.Label>
             </Col>
             <Col className="p-0">
@@ -84,6 +84,7 @@ const SummaryReify = () => {
             </Col>
             <Col
               lg={3}
+              xs={2}
               className="p-0 align-items-center justify-content-end d-flex"
             >
               <Button size="sm">Update</Button>
@@ -93,14 +94,24 @@ const SummaryReify = () => {
       </Stack>
       <Stack
         as={Col}
-        className="border bordered-container p-3 small-controlled-text"
+        className="border bordered-container mx-1 p-3 small-controlled-text my-1 my-lg-0"
       >
         <Row className="align-items-center">
           {outputFieldData.map((item, key) => {
             return (
-              <Col lg={6} key={key} className="mb-1 mt-1">
-                <Form.Group as={Row} className="info-input-row">
-                  <Col lg={4}>
+              <Col
+                lg={6}
+                key={key}
+                className={`${item.display !== 'none' ? 'mb-1 mt-1' : ''}`}
+              >
+                <Form.Group
+                  as={Row}
+                  className="info-input-row"
+                  style={{
+                    height: `${item.display === 'none' ? '0px' : 'auto'}`,
+                  }}
+                >
+                  <Col lg={4} xs={3}>
                     <Form.Label
                       className="d-flex align-items-center"
                       htmlFor={item.id}

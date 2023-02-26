@@ -81,19 +81,19 @@ const CustomerInfoReify = () => {
         as={Col}
         lg={5}
         xl={5}
-        className="border bordered-container mx-1 p-3 controlled-text"
+        className="border bordered-container mx-1 p-3 controlled-text my-1 my-lg-0"
       >
         {inputFieldsData.map((item, key) => {
           return (
             <Form className="mb-3" key={key}>
               <Form.Group as={Row} className="info-input-row">
-                <Col lg={4}>
+                <Col xs={4} lg={4}>
                   <Form.Label htmlFor={item.id}>{item.text}</Form.Label>
                 </Col>
                 <Col>
                   <Form.Control id={item.id} />
                 </Col>
-                <Col lg={3} className="justify-content-end">
+                <Col xs={2} lg={3} className="justify-content-end">
                   <Button size="sm">Update</Button>
                 </Col>
               </Form.Group>
@@ -102,7 +102,7 @@ const CustomerInfoReify = () => {
         })}
       </Stack>
 
-      <Stack as={Col} className="border bordered-container p-3 mx-1">
+      <Stack as={Col} className="border bordered-container p-3 mx-1 my-1 my-lg-0">
         {submittedFieldsData.map((item, key) => {
           return (
             <Form className="mb-3" key={key}>
@@ -110,7 +110,7 @@ const CustomerInfoReify = () => {
                 <Col>
                   <Form.Control id={item.id} disabled />
                 </Col>
-                <Col lg={2} className="justify-content-end">
+                <Col xs={2} lg={2} className="justify-content-end mt-2 mt-lg-0">
                   <Button variant="warning" size="sm">
                     Edit
                   </Button>

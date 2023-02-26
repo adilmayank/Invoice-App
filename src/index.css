@@ -19,6 +19,7 @@ code {
 
 .product-table {
   font-size: 0.8rem;
+  min-width: 450px;
 }
 
 td {

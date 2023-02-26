@@ -107,20 +107,14 @@ const ProductsInfoReify = () => {
     {
       text: 'Description',
       id: 'productDescription',
-      label: { lg: 4 },
-      control: { lg: 8 },
     },
     {
       text: 'Quantity',
       id: 'productQuantity',
-      label: { lg: 4 },
-      control: { lg: 8 },
     },
     {
       text: 'Unit Price',
       id: 'productUnitPrice',
-      label: { lg: 4 },
-      control: { lg: 8 },
     },
   ]
 
@@ -131,7 +125,7 @@ const ProductsInfoReify = () => {
         as={Col}
         lg={5}
         xl={5}
-        className="border bordered-container mx-1 p-3 controlled-text"
+        className="border bordered-container mx-1 p-3 controlled-text my-1 my-lg-0"
       >
         <Form>
           {inputFieldData.map((item, key) => {
@@ -141,10 +135,10 @@ const ProductsInfoReify = () => {
                 key={key}
                 className="mb-3 px-3 info-input-row"
               >
-                <Col lg={item.label.lg} className="p-0">
+                <Col xs={3} lg={4} className="p-0">
                   <Form.Label htmlFor={item.id}>{item.text}</Form.Label>
                 </Col>
-                <Col lg={item.control.lg} className="p-0">
+                <Col xs={9} lg={8} className="p-0">
                   <Form.Control id={item.id} className="" />
                 </Col>
               </Form.Group>
@@ -163,7 +157,7 @@ const ProductsInfoReify = () => {
       {/* Submitted products table container */}
       <Stack
         as={Col}
-        className="controlled-text p-3 mx-1 border bordered-container"
+        className="controlled-text p-3 mx-1 border bordered-container my-1 my-lg-0"
       >
         <Col className="y-scroll pl-0 h-100 ">
           <Table
