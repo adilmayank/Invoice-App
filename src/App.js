@@ -14,7 +14,7 @@ function App() {
     <Container fluid className="p-0" style={{ position: 'relative' }}>
       <WaitingSpinner />
       <NavNavbar />
-      <Container>
+      <Container className="my-3 parent-container">
         <CustomerInfo />
         <ProductProvider>
           <ProductsInfo />

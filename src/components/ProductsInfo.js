@@ -6,6 +6,7 @@ import {
   Table,
   Container,
   ButtonGroup,
+  Stack,
 } from 'react-bootstrap'
 import { useProductContext } from '../Contexts/ProductContext'
 import { useAppContext } from '../Contexts/Context'
@@ -101,140 +102,152 @@ const ProductsInfo = () => {
     setSubmittedProducts(newSubmittedProducts)
   }
 
+  let inputFieldData = [
+    {
+      text: 'Stock Code',
+      id: 'stockCode',
+      isError: errors.stockCode,
+      value: stockCode,
+    },
+    {
+      text: 'Description',
+      id: 'description',
+      value: description,
+      isError: errors.description,
+    },
+    {
+      text: 'Quantity',
+      id: 'quantity',
+      value: quantity,
+      validations: { type: 'number', min: 0, step: 1 },
+      isError: errors.quantity,
+    },
+    {
+      text: 'Unit Price',
+      id: 'unitPrice',
+      value: unitPrice,
+      validations: { type: 'number', min: 0, step: 0.1 },
+      isError: errors.unitPrice,
+    },
+  ]
+
   return (
-    <Row className="my-4 productsInfoContainer">
-      <Col md={5}>
+    <Stack as={Row}>
+      {/* Products input container */}
+      <Stack
+        as={Col}
+        lg={5}
+        xl={5}
+        className="border bordered-container mx-1 p-3 controlled-text my-1 my-lg-0"
+      >
         <Form>
-          <Form.Group as={Row} className="mb-3">
-            <Form.Label column md={4} htmlFor="stockCode">
-              Stock Code
-            </Form.Label>
-            <Col md={8} className="pr-0">
-              <Form.Control
-                id="stockCode"
-                className={`${errors.stockCode ? 'border-danger' : ''}`}
-                value={stockCode}
-                onChange={(e) => handleChange(e)}
-              />
-            </Col>
-          </Form.Group>
-          <Form.Group as={Row} className="mb-3">
-            <Form.Label column md={4} htmlFor="description">
-              Description
-            </Form.Label>
-            <Col md={8} className="pr-0">
-              <Form.Control
-                id="description"
-                value={description}
-                className={`${errors.description ? 'border-danger' : ''}`}
-                type="text"
-                onChange={(e) => handleChange(e)}
-              />
-            </Col>
-          </Form.Group>
-          <Form.Group as={Row} className="mb-3">
-            <Form.Label column md={4} htmlFor="quantity">
-              Quantity
-            </Form.Label>
-            <Col md={8} className="pr-0">
-              <Form.Control
-                id="quantity"
-                value={quantity}
-                className={`${errors.quantity ? 'border-danger' : ''}`}
-                type="number"
-                min={0}
-                onChange={(e) => handleChange(e)}
-              />
-            </Col>
-          </Form.Group>
-          <Form.Group as={Row} className="mb-3">
-            <Form.Label column md={4} htmlFor="unitPrice">
-              Unit Price
-            </Form.Label>
-            <Col md={8} className="pr-0">
-              <Form.Control
-                id="unitPrice"
-                value={unitPrice}
-                type="number"
-                className={`${errors.unitPrice ? 'border-danger' : ''}`}
-                min={0}
-                onChange={(e) => handleChange(e)}
-              />
-            </Col>
-          </Form.Group>
-          <Row>
-            <Col className="justify-content-end d-flex pr-0">
+          {inputFieldData.map((item, key) => {
+            return (
+              <Form.Group
+                as={Row}
+                key={key}
+                className="mb-3 px-3 info-input-row"
+              >
+                <Col xs={3} lg={4} className="p-0">
+                  <Form.Label htmlFor={item.id}>{item.text}</Form.Label>
+                </Col>
+                <Col xs={9} lg={8} className="p-0">
+                  <Form.Control
+                    id={item.id}
+                    className={`${item.isError ? 'border-danger' : ''}`}
+                    value={item.value}
+                    min={item.validations?.min}
+                    step={item.validations?.step}
+                    type={item.validations?.type}
+                    onChange={(e) => handleChange(e)}
+                  />
+                </Col>
+              </Form.Group>
+            )
+          })}
+          <Row className=" p-0">
+            <Col className="justify-content-end d-flex">
               <Button size="sm" onClick={() => handleSubmit()}>
                 Add
               </Button>
             </Col>
           </Row>
         </Form>
-      </Col>
-      <Col md={7} className="h-100">
-        <Container className="y-scroll h-100 border">
-          <Table
-            striped
-            size="sm"
-            bordered
-            hover
-            className="my-3 text-center product-table "
-          >
-            <thead>
-              <tr>
-                <th colSpan={1}>Sno</th>
-                <th colSpan={2}>Code</th>
-                <th colSpan={3}>Description</th>
-                <th colSpan={1}>Qty</th>
-                <th colSpan={2}>Unit Price</th>
-                <th colSpan={2}>Total Price</th>
-                <th colSpan={1}>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {submittedProducts.length > 0 ? (
-                submittedProducts.map((item, index) => {
-                  return (
-                    <tr key={index + 1}>
-                      <td colSpan={1}>{index + 1}</td>
-                      <td colSpan={2}>{item.stockCode}</td>
-                      <td colSpan={3}>{item.description}</td>
-                      <td colSpan={1}>{item.quantity}</td>
-                      <td colSpan={2}>{item.unitPrice}</td>
-                      <td colSpan={2}>{item.subTotal}</td>
-                      <td colSpan={1} className="d-flex justify-content-around">
-                        <ButtonGroup>
-                          <Button
-                            size="sm"
-                            variant="warning"
-                            id={item.stockCode}
-                            className="smaller-button"
-                            onClick={(e) => handleEditItem(e)}
-                          >
-                            E
-                          </Button>
-                          <Button
-                            size="sm"
-                            variant="danger"
-                            id={item.stockCode}
-                            className="smaller-button "
-                            onClick={(e) => handleRemoveItem(e)}
-                          >
-                            D
-                          </Button>
-                        </ButtonGroup>
-                      </td>
-                    </tr>
-                  )
-                })
-              ) : (
-                <tr></tr>
-              )}
-            </tbody>
-          </Table>
-        </Container>
-      </Col>
-    </Row>
+      </Stack>
+
+      {/* Submitted products table container */}
+      <Stack
+        as={Col}
+        className="controlled-text p-3 mx-1 border bordered-container my-1 my-lg-0"
+      >
+        <Col className="y-scroll pl-0 product-list-table ">
+          <Container>
+            <Table
+              striped
+              size="sm"
+              bordered
+              hover
+              className="text-center product-table"
+            >
+              <thead>
+                <tr>
+                  <th colSpan={1}>Sno</th>
+                  <th colSpan={2}>Code</th>
+                  <th colSpan={3}>Description</th>
+                  <th colSpan={1}>Qty</th>
+                  <th colSpan={2}>Unit Price</th>
+                  <th colSpan={2}>Total Price</th>
+                  <th colSpan={1}>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {submittedProducts.length > 0 ? (
+                  submittedProducts.map((item, index) => {
+                    return (
+                      <tr key={index + 1}>
+                        <td colSpan={1}>{index + 1}</td>
+                        <td colSpan={2}>{item.stockCode}</td>
+                        <td colSpan={3}>{item.description}</td>
+                        <td colSpan={1}>{item.quantity}</td>
+                        <td colSpan={2}>{item.unitPrice}</td>
+                        <td colSpan={2}>{item.subTotal}</td>
+                        <td
+                          colSpan={1}
+                          className="d-flex justify-content-around"
+                        >
+                          <ButtonGroup>
+                            <Button
+                              size="sm"
+                              variant="warning"
+                              id={item.stockCode}
+                              className="smaller-button"
+                              onClick={(e) => handleEditItem(e)}
+                            >
+                              E
+                            </Button>
+                            <Button
+                              size="sm"
+                              variant="danger"
+                              id={item.stockCode}
+                              className="smaller-button "
+                              onClick={(e) => handleRemoveItem(e)}
+                            >
+                              D
+                            </Button>
+                          </ButtonGroup>
+                        </td>
+                      </tr>
+                    )
+                  })
+                ) : (
+                  <tr></tr>
+                )}
+              </tbody>
+            </Table>
+          </Container>
+        </Col>
+      </Stack>
+    </Stack>
   )
 }
 export default ProductsInfo
