@@ -1,11 +1,11 @@
 import React from 'react'
-import { Row, Col, Form, Button, Container } from 'react-bootstrap'
+import { Row, Col, Form, Button, Container, Stack } from 'react-bootstrap'
 import { useAppContext } from '../Contexts/Context'
 import { SubAndGrandTotal } from '../Utilities/utils'
 
 const Summary = () => {
-  const [subTotalValue, setSubTotalValue] = React.useState("")
-  const [grandTotalValue, setGrandTotalValue] = React.useState("")
+  const [subTotalValue, setSubTotalValue] = React.useState('')
+  const [grandTotalValue, setGrandTotalValue] = React.useState('')
 
   const {
     gstRate,
@@ -19,8 +19,10 @@ const Summary = () => {
     setGstRate(e.target.value)
   }
   const submitGstRate = () => {
-    setSubmittedGstRate(gstRate)
-    setGstRate(0)
+    if (gstRate != 0 || gstRate != '') {
+      setSubmittedGstRate(gstRate)
+      setGstRate("")
+    }
   }
 
   React.useEffect(() => {
@@ -28,109 +30,122 @@ const Summary = () => {
     if (submittedProducts.length > 0) {
       setSubTotalValue(summary.subTotal.toFixed(2))
       setGrandTotalValue(summary.grandTotal.toFixed(2))
-    }
-    else {
-      setSubTotalValue("")
-      setGrandTotalValue("")
+    } else {
+      setSubTotalValue('')
+      setGrandTotalValue('')
     }
   }, [submittedProducts, submittedGstRate])
 
+  const outputFieldData = [
+    {
+      text: 'GST (%): ',
+      value: submittedGstRate,
+      id: 'gstRate',
+      display: 'unset',
+      disabled: true,
+      onChangeHandler: updateGstRate,
+    },
+    {
+      text: 'Sub-Total: ',
+      value: subTotalValue,
+      id: 'subTotal',
+      display: 'unset',
+      disabled: true,
+    },
+    {
+      text: '\u00A0',
+      value: '',
+      id: 'empty-div',
+      display: 'none',
+      disabled: true,
+    },
+    {
+      text: 'Grand Total: ',
+      value: grandTotalValue,
+      id: 'grandTotal',
+      display: 'unset',
+      disabled: true,
+    },
+  ]
+
   return (
-    <Row className="my-4">
-      <Col md={5}>
+    <Stack as={Row} className="my-3">
+      {/* Gst Rate Input container */}
+      <Stack
+        as={Col}
+        lg={5}
+        xl={5}
+        className="border bordered-container mx-1 p-3 controlled-text my-1 my-lg-0"
+      >
         <Form>
-          <Form.Group as={Row} className="mb-3">
-            <Form.Label column md={4} htmlFor="gstRate">
-              Gst (in %)
-            </Form.Label>
-            <Col md={6}>
+          <Form.Group as={Row} className=" px-3 info-input-row">
+            <Col xs={3} lg={4} className="p-0">
+              <Form.Label htmlFor="gstRate">GST (%)</Form.Label>
+            </Col>
+            <Col className="p-0">
               <Form.Control
                 id="gstRate"
-                value={gstRate}
                 type="number"
-                onChange={(e) => updateGstRate(e)}
                 min={0}
+                step={0.1}
+                value={gstRate}
+                onChange={(e) => updateGstRate(e)}
               />
             </Col>
-            <Col md={2} className="align-items-center d-flex">
+            <Col
+              lg={3}
+              xs={2}
+              className="p-0 align-items-center justify-content-end d-flex"
+            >
               <Button size="sm" onClick={submitGstRate}>
                 Update
               </Button>
             </Col>
           </Form.Group>
         </Form>
-      </Col>
-      <Col md={7} className="small-text">
-        <Container className="h-100 border p-3">
-          <Row className="h-50 mb-2 align-items-center">
-            <Col md={6}>
-              <Form.Group as={Row}>
-                <Form.Label
-                  className="d-flex align-items-center"
-                  column
-                  md={4}
-                  htmlFor="submittedGst"
-                  size="sm"
+      </Stack>
+      <Stack
+        as={Col}
+        className="border bordered-container mx-1 p-3 small-controlled-text my-1 my-lg-0"
+      >
+        <Row className="align-items-center">
+          {outputFieldData.map((item, key) => {
+            return (
+              <Col
+                lg={6}
+                key={key}
+                className={`${item.display !== 'none' ? 'mb-1 mt-1' : ''}`}
+              >
+                <Form.Group
+                  as={Row}
+                  className="info-input-row"
+                  style={{
+                    height: `${item.display === 'none' ? '0px' : 'auto'}`,
+                  }}
                 >
-                  GST (%):
-                </Form.Label>
-                <Col md={8}>
-                  <Form.Control
-                    id="submittedGst"
-                    disabled
-                    value={submittedGstRate}
-                    size="sm"
-                  ></Form.Control>
-                </Col>
-              </Form.Group>
-            </Col>
-            <Col md={6}>
-              <Form.Group as={Row}>
-                <Form.Label
-                  className="d-flex align-items-center"
-                  column
-                  md={4}
-                  htmlFor="subTotal"
-                >
-                  Sub Total:
-                </Form.Label>
-                <Col md={8}>
-                  <Form.Control
-                    id="subTotal"
-                    value={subTotalValue}
-                    size="sm"
-                    disabled
-                  ></Form.Control>
-                </Col>
-              </Form.Group>
-            </Col>
-          </Row>
-          <Row className="h-50 mb-2 align-items-center">
-            <Col md={6}>&nbsp;</Col>
-            <Col md={6}>
-              <Form.Group as={Row}>
-                <Form.Label
-                  className="d-flex align-items-center"
-                  column
-                  md={4}
-                  htmlFor="grandTotal"
-                >
-                  Grand Total:
-                </Form.Label>
-                <Col md={8}>
-                  <Form.Control
-                    id="grandTotal"
-                    value={grandTotalValue}
-                    size="sm"
-                    disabled
-                  ></Form.Control>
-                </Col>
-              </Form.Group>
-            </Col>
-          </Row>
-        </Container>
-      </Col>
-    </Row>
+                  <Col lg={4} xs={3}>
+                    <Form.Label
+                      className="d-flex align-items-center"
+                      htmlFor={item.id}
+                    >
+                      {item.text}
+                    </Form.Label>
+                  </Col>
+                  <Col>
+                    <Form.Control
+                      id={item.id}
+                      value={item.value}
+                      disabled={item.disabled}
+                      style={{ display: item.display }}
+                    />
+                  </Col>
+                </Form.Group>
+              </Col>
+            )
+          })}
+        </Row>
+      </Stack>
+    </Stack>
   )
 }
 export default Summary

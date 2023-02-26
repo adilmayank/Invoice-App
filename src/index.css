@@ -42,6 +42,10 @@ td {
   overflow-y: scroll;
 }
 
+.product-list-table {
+  height: 250px;
+}
+
 .waiting-spinner-container {
   position: absolute;
   /* display: none; */

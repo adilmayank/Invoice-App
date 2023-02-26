@@ -14,7 +14,7 @@ const MainButtons = () => {
       <Button size="sm" className="mx-2" onClick={handleSubmit}>
         Generate Invoice
       </Button>
-      <Button size="sm" variant="success" className="ml-2">
+      <Button size="sm" variant="success" className="ml-2" disabled>
         Export Data as Excel
       </Button>
     </Row>
