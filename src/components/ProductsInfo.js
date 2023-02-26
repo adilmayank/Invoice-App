@@ -171,6 +171,7 @@ const ProductsInfo = () => {
           </Row>
         </Form>
       </Col>
+      
       <Col md={7} className="h-100">
         <Container className="y-scroll h-100 border">
           <Table
