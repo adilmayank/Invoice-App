@@ -94,7 +94,7 @@ const Summary = () => {
             </Col>
             <Col
               lg={3}
-              xs={2}
+              xs={3}
               className="p-0 align-items-center justify-content-end d-flex"
             >
               <Button size="sm" onClick={submitGstRate}>
@@ -123,7 +123,7 @@ const Summary = () => {
                     height: `${item.display === 'none' ? '0px' : 'auto'}`,
                   }}
                 >
-                  <Col lg={4} xs={3}>
+                  <Col lg={4} xs={4}>
                     <Form.Label
                       className="d-flex align-items-center"
                       htmlFor={item.id}

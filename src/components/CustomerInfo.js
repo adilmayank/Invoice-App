@@ -134,7 +134,7 @@ const CustomerInfo = () => {
                     onChange={(e) => item.onChangeHandler(e)}
                   />
                 </Col>
-                <Col xs={2} lg={3} className="justify-content-end">
+                <Col xs={3} lg={3} className="justify-content-end">
                   <Button size="sm" onClick={item.onSubmitHandler}>
                     Update
                   </Button>
@@ -156,7 +156,7 @@ const CustomerInfo = () => {
                 <Col>
                   <Form.Control id={item.id} disabled value={item.value} />
                 </Col>
-                <Col xs={2} lg={2} className="justify-content-end mt-2 mt-lg-0">
+                <Col xs={2} lg={2} className="justify-content-end">
                   <Button variant="warning" size="sm" disabled>
                     Edit
                   </Button>
