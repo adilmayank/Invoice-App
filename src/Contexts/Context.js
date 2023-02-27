@@ -25,20 +25,36 @@ export const AppProvider = ({ children }) => {
       submittedGstRate,
       submittedProducts,
     }
-    setWaitingForInvoice(true)
 
-    SubmitAndReturnExcel(postBody, {
-      responseType: 'arraybuffer',
-    })
-      .then((data) => {
-        console.log(data.data)
-        setWaitingForInvoice(false)
-        DownloadPdf(data.data)
+    const validationResult =
+      postBody.submittedCustomerName.length > 0 &&
+      postBody.submittedCustomerABN.length > 0 &&
+      postBody.submittedCustomerEmail.length > 0 &&
+      postBody.submittedGstRate > 0 &&
+      postBody.submittedProducts.length > 0
+
+    if (validationResult) {
+      setWaitingForInvoice(() => {
+        return true
       })
-      .catch((err) => {
-        setWaitingForInvoice(false)
-        console.log(err)
+      console.log('Now submitting response')
+      SubmitAndReturnExcel(postBody, {
+        responseType: 'arraybuffer',
       })
+        .then((data) => {
+          console.log(data.data)
+          setWaitingForInvoice(false)
+          DownloadPdf(data.data)
+        })
+        .catch((err) => {
+          setWaitingForInvoice(false)
+          console.log(err)
+        })
+    } else {
+      alert(
+        'Please fill the form completely. \nMake sure no input field is left blank and products list has atleast one item.'
+      )
+    }
   }
 
   const initialValues = {

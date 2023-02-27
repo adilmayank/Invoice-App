@@ -30,7 +30,6 @@ const CustomerInfo = () => {
 
   const submitCustomerName = () => {
     if (customerName.trim() !== '') {
-      console.log('Hi')
       setSubmittedCustomerName((state) => {
         return customerName
       })

@@ -4,9 +4,6 @@ import { useAppContext } from '../Contexts/Context'
 const MainButtons = () => {
   const { submitResponse, setWaitingForInvoice } = useAppContext()
   const handleSubmit = () => {
-    setWaitingForInvoice(() => {
-      return true
-    })
     submitResponse()
   }
   return (
