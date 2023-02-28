@@ -10,7 +10,14 @@ function WaitingSpinner() {
           <Spinner animation="border" role="status">
             <span className="visually-hidden"></span>
           </Spinner>
-          <span>Generating Invoice</span>
+          <div className="spinner-text">
+            <span>
+              <strong>Generating Invoice</strong>
+            </span>
+            <span>
+              <em>Poor Dev! Free Tier! Takes Time!</em>
+            </span>
+          </div>
         </div>
       </div>
     )
